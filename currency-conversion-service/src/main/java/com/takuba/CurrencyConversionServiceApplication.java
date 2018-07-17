@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients("com.takuba")
 @EnableDiscoveryClient
 public class CurrencyConversionServiceApplication {
 
