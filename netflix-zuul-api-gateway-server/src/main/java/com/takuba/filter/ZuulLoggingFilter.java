@@ -1,5 +1,7 @@
 package com.takuba.filter;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -15,8 +17,16 @@ public class ZuulLoggingFilter extends ZuulFilter {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public Object run() throws ZuulException {
+		final RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
 		logger.info("request->{} request uri->{}",request,request.getRequestURI());
+		logger.info("Autorization {}",requestContext.getRequest().getHeader("Authorization"));
+		if(requestContext.getRequest().getHeader("Authorization") != null){
+			Enumeration<String> parameterNames = requestContext.getRequest().getParameterNames();
+			while(parameterNames.hasMoreElements()){
+				logger.info("parameterNames:{}",parameterNames.nextElement());
+			}
+		}
 		return null;
 	}
 
